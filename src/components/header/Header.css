@@ -1,0 +1,27 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--dark);
+}
+
+.header h2 {
+    color: var(--light);
+    margin: 8px;
+}
+
+.header-input {
+    padding: 5px;
+    height: 40px;
+    margin-bottom: 30px;
+}
+
+.header-input-container {
+    position: relative;
+}
+
+.search-icon {
+    color: var(--light);
+    margin: 0 8px;
+}
