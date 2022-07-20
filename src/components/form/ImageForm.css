@@ -1,0 +1,41 @@
+.image-form-section {
+    border: 2px solid var(--dark);
+    padding: 10px 16px;
+    width: 550px;
+    margin: auto;
+}
+
+.image-form-container {
+    padding: 12px;  
+}
+
+.form-input {
+    width: 100%;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.form-input-file {
+    margin-bottom: 8px;
+}
+
+.submit-btn {
+    text-align: right;
+}
+
+.btn {
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: rgb(168, 145, 168);
+}
+
+.btn:hover {
+    color: greenyellow;
+    transition: 0.3s;
+}
