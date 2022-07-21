@@ -1,11 +1,14 @@
+
 import "./ImageForm.css";
 
-const ImageForm = () => {
+const ImageForm = ({ closeModal }) => {
   return (
     <div className="image-form-section">
       <form className="image-form-container">
-        <h2>Upload image</h2>
-
+        <div className="form-close-btn">
+          <button className="close-button" onClick={() => closeModal(true)}> X </button>
+        </div>
+        <h1>Upload image</h1>
         <div className="form-control">
           <label htmlFor="title" />
           <input

@@ -12,7 +12,7 @@
     background-color: var(--dark);
 }
 
-.image-form-container h2 {
+.image-form-container h1 {
     color: var(--light);
     text-align: center;
     margin-bottom: 10px;
@@ -51,4 +51,13 @@
 .btn:hover {
     color: greenyellow;
     transition: 0.3s;
+}
+
+.form-close-btn {
+    text-align: right;
+}
+
+.close-button {
+    background-color: red;
+    
 }
