@@ -3,12 +3,16 @@ import "./ImageForm.css";
 const ImageForm = () => {
   return (
     <div className="image-form-section">
-      <h2>Upload image</h2>
       <form className="image-form-container">
+        <h2>Upload image</h2>
 
         <div className="form-control">
           <label htmlFor="title" />
-          <input type="text" className="form-input" placeholder="Title of  image" />
+          <input
+            type="text"
+            className="form-input"
+            placeholder="Title of  image"
+          />
         </div>
 
         <div className="form-control">

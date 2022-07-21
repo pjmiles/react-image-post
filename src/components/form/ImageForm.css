@@ -1,12 +1,21 @@
-.image-form-section {
-    border: 2px solid var(--dark);
-    padding: 10px 16px;
-    width: 550px;
-    margin: auto;
-}
 
 .image-form-container {
-    padding: 12px;  
+    padding: 40px;
+    margin: auto;
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    border: 5px solid var(--light);
+    transform: translate(-50%, -50%);
+
+    background-color: var(--dark);
+}
+
+.image-form-container h2 {
+    color: var(--light);
+    text-align: center;
+    margin-bottom: 10px;
 }
 
 .form-input {
@@ -19,6 +28,9 @@
 
 .form-input-file {
     margin-bottom: 8px;
+    background: white;
+    margin-top: 10px;
+
 }
 
 .submit-btn {
@@ -26,6 +38,7 @@
 }
 
 .btn {
+    margin-top: 10px;
     width: 80px;
     height: 30px;
     border-radius: 10px;
