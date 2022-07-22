@@ -1,46 +1,36 @@
+import { imageURL } from "../api/axios";
+import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 
 const DisplayImage = () => {
+  const [images, setImages] = useState([]);
+
+  const showImage = async () => {
+    try {
+    const res = await imageURL
+      setImages(res.data.results);
+      console.log(res.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    showImage();
+  }, []);
+
   return (
     <div className="display-section">
       <div className="image-section">
         <div className="image-container">
-          <div className="image-control">
-            <img
-              src="https://images.unsplash.com/photo-1579260668779-fb03c244ab66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fG11c2ljfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="piano"
-              className="image"
-            />
-            <p>Title</p>
-            <p>Description</p>
-          </div>
-          <div className="image-control">
-            <img
-              src="https://images.unsplash.com/photo-1579260668779-fb03c244ab66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fG11c2ljfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="piano"
-              className="image"
-            />
-            <p>Title</p>
-            <p>Description</p>
-          </div>
-          <div className="image-control">
-            <img
-              src="https://images.unsplash.com/photo-1579260668779-fb03c244ab66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fG11c2ljfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="piano"
-              className="image"
-            />
-            <p>Title</p>
-            <p>Description</p>
-          </div>
-          <div className="image-control">
-            <img
-              src="https://images.unsplash.com/photo-1579260668779-fb03c244ab66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fG11c2ljfGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt="piano"
-              className="image"
-            />
-            <p>Title</p>
-            <p>Description</p>
-          </div>
+          {images.map((image) => {
+            return (
+              <div className="image-control">
+                <img src={image.image} alt={image.name} className="image" />
+                <p className="image-title">{image.title}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

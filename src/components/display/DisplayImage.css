@@ -12,3 +12,8 @@
     width: 200px;
     height: 200px;
 }
+
+.image-control p {
+    text-align: center;
+    font-size: 20px;
+}
