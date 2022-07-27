@@ -11,7 +11,7 @@
     margin: 8px;
 }
 
-.header-input {
+/* .header-input {
     padding: 5px;
     height: 40px;
    
@@ -19,12 +19,12 @@
 
 .header-input-container {
     position: relative;
-}
+} */
 
-.search-icon {
+/* .search-icon {
     color: var(--light);
     margin: 0 8px;
-}
+} */
 
 .upload-btn{
    height: 30px;

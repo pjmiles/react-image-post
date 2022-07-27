@@ -1,31 +1,51 @@
 import { useState } from "react";
+import axiosInstance from "../api/axios";
 import "./ImageForm.css";
 
 const ImageForm = ({ closeModal }) => {
-  const [postImage, setPostImage] = useState({ title: "", file: "" });
+  const [userDetails, setUserDetails] = useState({ title: "", image: null });
+  const [message, setMessage] = useState("")
 
   const handleChange = (e) => {
     e.preventDefault();
-    setPostImage({ ...postImage, [e.target.name]: e.target.value });
+    setUserDetails({
+      ...userDetails,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleUploads = async () => {
+  const handleImage = (e) => {
+    setUserDetails({...userDetails, image: e.target.files[0]})
+    console.log(userDetails.image)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     try {
-      setPostImage({ title: "", file: "" });
-      console.log(postImage)
+      const data = await axiosInstance.post("/", userDetails, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        }
+      });
+      setMessage("Upload Successfull!")
+      console.log(data);
+      console.log(userDetails.image)
+
     } catch {
       console.log("Error with uploading");
+      setMessage("Error Uploading Image")
     }
   };
 
   return (
     <div className="image-form-section">
-      <form className="image-form-container" onSubmit={handleUploads}>
+      <form className="image-form-container" encType="multipart/form-data" onSubmit={handleSubmit}>
         <div className="form-close-btn">
-          <button className="close-button" onClick={() => closeModal(true)}>
+          <button className="close-button" onClick={() => closeModal(false)}>
             {" "}
             X{" "}
           </button>
+          <div className="form-message">{message}</div>
         </div>
         <h1>Upload image</h1>
         <div className="form-control">
@@ -33,11 +53,10 @@ const ImageForm = ({ closeModal }) => {
           <input
             type="text"
             className="form-input"
-            placeholder="Title of  image"
+            placeholder="Title of image"
             name="title"
-            value={postImage.title}
+            value={userDetails.title}
             onChange={handleChange}
-            required
           />
         </div>
 
@@ -46,10 +65,9 @@ const ImageForm = ({ closeModal }) => {
           <input
             type="file"
             className="form-input-file"
-            name="file"
-            value={postImage.file}
-            onChange={handleChange}
-            required
+            name="image"
+            onChange={handleImage}
+            accept="image/png, image/jpeg"
           />
         </div>
 

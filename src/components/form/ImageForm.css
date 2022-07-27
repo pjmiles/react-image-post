@@ -61,3 +61,12 @@
     background-color: red;
     
 }
+
+.loadmore {
+    text-align: center;
+}
+
+.form-message{
+    color: var(--msg);
+    text-align: center;
+}

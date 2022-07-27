@@ -2,12 +2,35 @@ import { useState } from "react";
 import "./Header.css";
 import { FaSearch } from "react-icons/fa";
 import ImageForm from "../form/ImageForm";
+import axiosInstance from "../api/axios";
 
 const Header = () => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpen = () => {
     setOpenModal(true);
   };
+ 
+  const [search, setSearch] = useState("");
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    setSearch(e.target.value);
+  };
+ 
+  
+  const searchPictures = async () => {
+    try {
+      const res = await axiosInstance.get(`${search}`);
+      setSearch(res.data.results);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+  
+  useEffect(() => {
+    searchPictures();
+  },[]);
+
 
   return (
     <>
@@ -16,11 +39,12 @@ const Header = () => {
         <div className="header-conatiner">
           <div className="header-input-container">
             <FaSearch className="search-icon" />
-            <input
+             <input
               type="text"
               className="header-input"
               placeholder="search here"
-              id=""
+              value={search}
+              onChange={handleSearch}
             />
           </div>
         </div>
@@ -30,7 +54,7 @@ const Header = () => {
           </button>
         </div>
       </div>
-      {openModal && <ImageForm />}
+      {openModal && <ImageForm closeModal={setOpenModal} />}
     </>
   );
 };
