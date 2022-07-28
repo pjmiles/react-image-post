@@ -1,21 +1,33 @@
-// import { useState, useEffect } from "react";
-// import axiosInstance from '../api/axios'
-// import "./Search.css";
+import { useState } from "react";
+import SearchItems from "./SearchItems";
 
-// const Search = () => {
+const Search = ({ images }) => {
+  const [searchField, setSerachField] = useState("");
 
+  const filteredImages = images.filter((image) => {
+    return image.title.toLowerCase().includes(searchField.toLowerCase());
+  });
 
-//   return (
-//     <div className="search">
-//       <input
-//         type="text"
-//         placeholder="search"
-//         className="search-input"
-//         value={search}
-//         onChange={handleSearch}
-//       />
-//     </div>
-//   );
-// };
+  const handleChange = (e) => {
+    setSerachField(e.target.value);
+  };
 
-// export default Search;
+  const searchList = () => {
+    return (
+      <>
+        <SearchItems filteredImages={filteredImages} />
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div>
+        <input type="text" placeholder="Search image" onchange={handleChange} />
+      </div>
+      {searchList()}
+    </>
+  );
+};
+
+export default Search;

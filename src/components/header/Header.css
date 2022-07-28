@@ -11,13 +11,13 @@
     margin: 8px;
 }
 
-/* .header-input {
+.header-input {
     padding: 5px;
-    height: 40px;
+    /* height: 40px; */
    
 }
 
-.header-input-container {
+/* .header-input-container {
     position: relative;
 } */
 
@@ -27,7 +27,7 @@
 } */
 
 .upload-btn{
-   height: 30px;
+   /* height: 30px; */
    padding: 5px;
    border-radius: 5px;
    background: aquamarine;
