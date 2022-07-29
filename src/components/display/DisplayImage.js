@@ -2,8 +2,8 @@ import axiosInstance from "../api/axios";
 import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 
-const DisplayImage = () => {
-  const [images, setImages] = useState([]);
+const DisplayImage = ({ images, setImages }) => {
+ 
   // const [showMore, setShowMore] = useState(5);
 
   useEffect(() => {

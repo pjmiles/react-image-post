@@ -7,7 +7,6 @@ const ImageForm = ({ closeModal }) => {
   const [message, setMessage] = useState("")
 
   const handleChange = (e) => {
-    // e.preventDefault();
     setUserDetails({
       ...userDetails,
       [e.target.name]: e.target.value,

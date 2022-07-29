@@ -1,40 +1,31 @@
-import { useState, useEffect } from "react";
-// import DisplayImage from "../display/DisplayImage";
+import { useState } from "react";
 import "./Header.css";
-// import { FaSearch } from "react-icons/fa";
 import ImageForm from "../form/ImageForm";
 import axiosInstance from "../api/axios";
 
-const Header = () => {
+const Header = ({ setImages }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [mount, setMount] = useState(false);
+
   const handleOpen = () => {
     setOpenModal(true);
   };
 
   const [search, setSearch] = useState("");
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    setSearch(e.target.value);
+  const handleSearch = (e) => {
+    setSearch(e.target.value.toLowerCase().toString());
   };
 
   const searchPictures = async () => {
     try {
-       await axiosInstance.get(`${search}`);
-      setSearch(search);
+      const res = await axiosInstance.get(`?search=${search}`);
+      setImages(res.data.results);
+      console.log(res)
     } catch (error) {
       console.log(error);
     }
   };
 
-
-  useEffect(() => {
-    if (!mount) {
-      setMount(true);
-      searchPictures();
-    }
-  }, [searchPictures, mount]);
 
   return (
     <>
@@ -49,6 +40,7 @@ const Header = () => {
             value={search}
             onChange={handleSearch}
           />
+          <button onClick={searchPictures}>Search</button>
         </div>
         <div className="header-upload-btn">
           <button className="upload-btn" onClick={() => handleOpen()}>
