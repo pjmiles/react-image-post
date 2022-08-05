@@ -40,7 +40,7 @@ const Header = ({ setImages }) => {
             value={search}
             onChange={handleSearch}
           />
-          <button onClick={searchPictures}>Search</button>
+          <button className="search-btn" onClick={searchPictures}>Search</button>
         </div>
         <div className="header-upload-btn">
           <button className="upload-btn" onClick={() => handleOpen()}>

@@ -2,40 +2,35 @@ import axiosInstance from "../api/axios";
 import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 
+let perPage = 0;
+
 const DisplayImage = ({ images, setImages }) => {
- 
-  // const [showMore, setShowMore] = useState(5);
+
+  const showImage = async () => {
+    try {
+      const res = await axiosInstance.get(`?&offset=${perPage}`);
+      setImages(res.data.results);
+    } catch (error) {
+      console.log(error);
+    }
+    perPage += 5;
+  };
 
   useEffect(() => {
-    const showImage = async () => {
-      try {
-        const res = await axiosInstance.get();
-        setImages(res.data.results);
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     showImage();
   }, []);
 
+  const loadMore = () => {
+    showImage();
+  };
+
   const handleDelete = async (id) => {
     try {
-      const result = await axiosInstance.delete(id);
+      const result = await axiosInstance.delete(`${id}`);
       console.log(result);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const loadMore = async () => {
-    // try {
-    //   const next = await axiosInstance.get("/")
-    //   setShowMore(next.data.results)
-    //   console.log(setShowMore)
-    // } catch (error) {
-    //   console.log(error)
-    // }
   };
 
   return (
@@ -48,14 +43,18 @@ const DisplayImage = ({ images, setImages }) => {
                 <div className="image-control" key={image.id}>
                   <img src={image.image} alt={image.name} className="image" />
                   <p className="image-title">{image.title}</p>
-                  <button onClick={() => handleDelete()}>delete</button>
+                  <div className="delete-section">
+                    <button className="delete" onClick={() => handleDelete()}>
+                      delete
+                    </button>
+                  </div>
                 </div>
               );
             })}
           </div>
         </div>
         <div className="loadmore">
-          <button onClick={() => loadMore()}>LoadMore</button>
+          <button onClick={loadMore}>Loadmore</button>
         </div>
       </div>
     </>
