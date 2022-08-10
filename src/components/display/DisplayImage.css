@@ -26,3 +26,11 @@
     color: red;
     padding: 2px;
 }
+
+.error-display{
+    color: red;
+}
+
+.error-container {
+    text-align: center;
+}

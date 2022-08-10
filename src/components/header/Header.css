@@ -6,7 +6,7 @@
     height: 80px;
 }
 
-.header h2 {
+.header h1 {
     color: var(--light);
     margin: 8px;
 }

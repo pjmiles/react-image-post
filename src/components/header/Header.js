@@ -3,7 +3,7 @@ import "./Header.css";
 import ImageForm from "../form/ImageForm";
 import axiosInstance from "../api/axios";
 
-const Header = ({ setImages }) => {
+const Header = ({ setImages, setErr }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpen = () => {
@@ -18,9 +18,11 @@ const Header = ({ setImages }) => {
 
   const searchPictures = async () => {
     try {
-      const res = await axiosInstance.get(`?search=${search}`);
-      setImages(res.data.results);
-      console.log(res)
+      const { data }  = await axiosInstance.get(`?search=${search}`);
+      if(!data.count) {
+        setErr("Image not found") // if search not found 
+      }
+      setImages(data.results);
     } catch (error) {
       console.log(error);
     }
@@ -30,9 +32,8 @@ const Header = ({ setImages }) => {
   return (
     <>
       <div className="header">
-        <h2>Images</h2>
+        <h1>Images</h1>
         <div className="header-input-container">
-          {/* <FaSearch className="search-icon" /> */}
           <input
             type="text"
             className="header-input"

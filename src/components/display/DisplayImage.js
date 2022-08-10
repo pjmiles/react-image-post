@@ -2,26 +2,27 @@ import axiosInstance from "../api/axios";
 import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 
-let perPage = 0;
-
-const DisplayImage = ({ images, setImages }) => {
-
-  const showImage = async () => {
-    try {
-      const res = await axiosInstance.get(`?&offset=${perPage}`);
-      setImages(res.data.results);
-    } catch (error) {
-      console.log(error);
-    }
-    perPage += 5;
-  };
+const DisplayImage = ({ images, setImages, err, setErr }) => {
+  const [perPage, setPerPage] = useState("");
 
   useEffect(() => {
+    const showImage = async () => {
+      try {
+        const { data } = await axiosInstance.get(`?&offset=${perPage}`);
+        console.log(data)
+        setImages(data.results);
+        if(!data.next){
+          setErr("No more images")
+        }
+      } catch {
+        setErr("Error showing images");
+      }
+    };
     showImage();
-  }, []);
+  }, [setImages, perPage, setErr]);
 
   const loadMore = () => {
-    showImage();
+    setPerPage((more) => more + 1); //not perfect yet
   };
 
   const handleDelete = async (id) => {
@@ -37,6 +38,9 @@ const DisplayImage = ({ images, setImages }) => {
     <>
       <div className="display-section">
         <div className="image-section">
+          <div className="error-container">
+            <div className="error-display">{err}</div>
+          </div>
           <div className="image-container">
             {images.map((image) => {
               return (
