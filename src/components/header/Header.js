@@ -12,15 +12,13 @@ const Header = ({ setImages, setErr }) => {
 
   const [search, setSearch] = useState("");
 
-  const handleSearch = (e) => {
-    setSearch(e.target.value.toLowerCase().toString());
-  };
-
   const searchPictures = async () => {
     try {
-      const { data }  = await axiosInstance.get(`?search=${search}`);
-      if(!data.count) {
-        setErr("Image not found") // if search not found 
+      const { data } = await axiosInstance.get(`?search=${search}`);
+      if (!data.count) {
+        setErr("Image not found"); // if search not found
+      } else {
+        setErr("");
       }
       setImages(data.results);
     } catch (error) {
@@ -28,6 +26,10 @@ const Header = ({ setImages, setErr }) => {
     }
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    searchPictures();
+  };
 
   return (
     <>
@@ -41,7 +43,9 @@ const Header = ({ setImages, setErr }) => {
             value={search}
             onChange={handleSearch}
           />
-          <button className="search-btn" onClick={searchPictures}>Search</button>
+          {/* <button className="search-btn" onClick={searchPictures}>
+            Search
+          </button> */}
         </div>
         <div className="header-upload-btn">
           <button className="upload-btn" onClick={() => handleOpen()}>
