@@ -3,30 +3,30 @@ import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 import Loading from "../loading/Loding";
 
-const DisplayImage = ({ images, setImages, err, setErr, }) => {
+const DisplayImage = ({ images, setImages, err, setErr }) => {
   const [perPage, setPerPage] = useState("");
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const showImage = async () => {
       try {
         const { data } = await axiosInstance.get(`?&offset=${perPage}`);
-        console.log(data)
+        console.log(data);
         setImages(data.results);
-        if(!data.next){
-          setErr("No more images")
+        if (!data.next) {
+          setErr("No more images");
         }
-        setIsLoaded(true)
+        setIsLoaded(true);
       } catch {
         setErr("Error showing images");
-        setIsLoaded(true)
+        setIsLoaded(true);
       }
     };
     showImage();
   }, [setImages, perPage, setErr, setIsLoaded]);
 
   const loadMore = () => {
-    setPerPage((more) => more + 1); //not perfect yet
+    setPerPage((page) => page + 1); //not perfect yet
   };
 
   const handleDelete = async (id) => {
@@ -42,23 +42,29 @@ const DisplayImage = ({ images, setImages, err, setErr, }) => {
     <>
       <div className="display-section">
         <div className="image-section">
-          {err && <div className="error-container">
-            <div className="error-display">{err}</div>
-          </div>}
+          {err && (
+            <div className="error-container">
+              <div className="error-display">{err}</div>
+            </div>
+          )}
           <div className="image-container">
-            {isLoaded ? images.map((image) => {
-              return (
-                <div className="image-control" key={image.id}>
-                  <img src={image.image} alt={image.name} className="image" />
-                  <p className="image-title">{image.title}</p>
-                  <div className="delete-section">
-                    <button className="delete" onClick={() => handleDelete()}>
-                      delete
-                    </button>
+            {isLoaded ? (
+              images.map((image) => {
+                return (
+                  <div className="image-control" key={image.id}>
+                    <img src={image.image} alt={image.name} className="image" />
+                    <p className="image-title">{image.title}</p>
+                    <div className="delete-section">
+                      <button className="delete" onClick={() => handleDelete()}>
+                        delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              );
-            }): <Loading />}
+                );
+              })
+            ) : (
+              <Loading />
+            )}
           </div>
         </div>
         <div className="loadmore">

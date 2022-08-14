@@ -26,7 +26,7 @@ const Header = ({ setImages, setErr }) => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearchChange = (e) => {
     setSearch(e.target.value);
     searchPictures();
   };
@@ -41,7 +41,7 @@ const Header = ({ setImages, setErr }) => {
             className="header-input"
             placeholder="search here"
             value={search}
-            onChange={handleSearch}
+            onChange={handleSearchChange}
           />
           {/* <button className="search-btn" onClick={searchPictures}>
             Search
