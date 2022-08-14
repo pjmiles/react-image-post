@@ -26,7 +26,7 @@ const Header = ({ setImages, setErr }) => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearchChange = (e) => {
     setSearch(e.target.value);
     searchPictures();
   };
