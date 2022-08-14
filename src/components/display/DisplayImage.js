@@ -1,9 +1,11 @@
 import axiosInstance from "../api/axios";
 import { useState, useEffect } from "react";
 import "./DisplayImage.css";
+import Loading from "../loading/Loding";
 
-const DisplayImage = ({ images, setImages, err, setErr }) => {
+const DisplayImage = ({ images, setImages, err, setErr, }) => {
   const [perPage, setPerPage] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const showImage = async () => {
@@ -14,12 +16,14 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
         if(!data.next){
           setErr("No more images")
         }
+        setIsLoaded(true)
       } catch {
         setErr("Error showing images");
+        setIsLoaded(true)
       }
     };
     showImage();
-  }, [setImages, perPage, setErr]);
+  }, [setImages, perPage, setErr, setIsLoaded]);
 
   const loadMore = () => {
     setPerPage((more) => more + 1); //not perfect yet
@@ -38,11 +42,11 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
     <>
       <div className="display-section">
         <div className="image-section">
-          <div className="error-container">
+          {err && <div className="error-container">
             <div className="error-display">{err}</div>
-          </div>
+          </div>}
           <div className="image-container">
-            {images.map((image) => {
+            {isLoaded ? images.map((image) => {
               return (
                 <div className="image-control" key={image.id}>
                   <img src={image.image} alt={image.name} className="image" />
@@ -54,7 +58,7 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
                   </div>
                 </div>
               );
-            })}
+            }): <Loading />}
           </div>
         </div>
         <div className="loadmore">
