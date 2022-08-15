@@ -4,8 +4,9 @@ import "./DisplayImage.css";
 import Loading from "../loading/Loding";
 
 const DisplayImage = ({ images, setImages, err, setErr }) => {
-  const [perPage, setPerPage] = useState("");
+  const [perPage, setPerPage] = useState(1);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [imageMsg, setImageMsg] = useState("");
 
   useEffect(() => {
     const showImage = async () => {
@@ -14,7 +15,7 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
         console.log(data);
         setImages(data.results);
         if (!data.next) {
-          setErr("No more images");
+          setImageMsg("No more paginated images");
         }
         setIsLoaded(true);
       } catch {
@@ -26,7 +27,7 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
   }, [setImages, perPage, setErr, setIsLoaded]);
 
   const loadMore = () => {
-    setPerPage((page) => page + 1); //not perfect yet
+    setPerPage((page) => page + 5); //to add 5 pictures more
   };
 
   const handleDelete = async (id) => {
@@ -42,10 +43,12 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
     <>
       <div className="display-section">
         <div className="image-section">
-          {err && (
+          {err ? (
             <div className="error-container">
               <div className="error-display">{err}</div>
             </div>
+          ) : (
+            <div className="image-message">{imageMsg}</div>
           )}
           <div className="image-container">
             {isLoaded ? (
