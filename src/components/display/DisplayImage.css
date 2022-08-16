@@ -38,3 +38,7 @@
 .image-message {
     color: goldenrod;
 }
+
+.image-message-container {
+    text-align: center;
+}
