@@ -6,7 +6,7 @@
     height: 80px;
 }
 
-.header h2 {
+.header h1 {
     color: var(--light);
     margin: 8px;
 }
@@ -37,4 +37,12 @@
 .upload-btn:hover {
     background: plum;
     transition: 0.3s;
+}
+
+.search-btn {
+    margin-left: 5px;
+    padding: 5px;
+    color: rgb(92, 92, 221);
+    cursor: pointer;
+
 }
