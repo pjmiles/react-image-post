@@ -48,7 +48,9 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
               <div className="error-display">{err}</div>
             </div>
           ) : (
-            <div className="image-message">{imageMsg}</div>
+            <div className="image-message-container">
+              <div className="image-message">{imageMsg}</div>
+            </div>
           )}
           <div className="image-container">
             {isLoaded ? (

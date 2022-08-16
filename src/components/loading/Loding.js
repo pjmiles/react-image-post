@@ -1,10 +1,7 @@
-const Loading = () => {
-    
-    return (
-        <div>
-            Loading...
-        </div>
-    )
-}
+import './Loading.css'
 
-export default Loading
+const Loading = () => {
+  return <div className="loading"></div>;
+};
+
+export default Loading;
