@@ -42,3 +42,15 @@
 .image-message-container {
     text-align: center;
 }
+
+.loadmore-btn {
+    position: sticky;
+    padding: 5px;
+    border: none;
+    background-color: var(--light-blue);
+}
+
+.loadmore-btn:hover {
+    background-color: var(--btn-color);
+    color: var(--light);
+}

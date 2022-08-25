@@ -2,20 +2,24 @@ import axiosInstance from "../api/axios";
 import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 import Loading from "../loading/Loding";
+import axios from "axios";
+import { baseURL } from "../api/axios";
 
 const DisplayImage = ({ images, setImages, err, setErr }) => {
-  const [perPage, setPerPage] = useState(1);
+  const [pages, setPage] = useState(1);
+  const [totalImages, setTotalImages] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false);
   const [imageMsg, setImageMsg] = useState("");
 
   useEffect(() => {
     const showImage = async () => {
       try {
-        const { data } = await axiosInstance.get(`?&offset=${perPage}`);
+        const { data } = await axios.get(`${baseURL}?&offset=${pages}`);
         console.log(data);
         setImages(data.results);
+        setTotalImages(data.totalImages)
         if (!data.next) {
-          setImageMsg("No more paginated images");
+          setImageMsg("End of the page");
         }
         setIsLoaded(true);
       } catch {
@@ -24,10 +28,14 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
       }
     };
     showImage();
-  }, [setImages, perPage, setErr, setIsLoaded]);
+  }, [setImages, pages, setErr, setIsLoaded]);
 
-  const loadMore = () => {
-    setPerPage((page) => page + 5); //to add 5 pictures more
+  const handleNext = () => {
+    if (pages === totalImages) {
+      return;
+    } else {
+      setPage((pages) => pages + 1); //to add more pictures
+    }
   };
 
   const handleDelete = async (id) => {
@@ -73,7 +81,9 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
           </div>
         </div>
         <div className="loadmore">
-          <button onClick={loadMore}>Loadmore</button>
+          <button onClick={handleNext} className="handleNext-btn">
+            handleNext
+          </button>
         </div>
       </div>
     </>
