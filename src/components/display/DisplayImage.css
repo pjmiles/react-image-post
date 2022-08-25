@@ -43,14 +43,16 @@
     text-align: center;
 }
 
-.loadmore-btn {
+
+.handlePrev-btn, .handleNext-btn{
     position: sticky;
     padding: 5px;
     border: none;
     background-color: var(--light-blue);
+    margin-right: 5px;
 }
 
-.loadmore-btn:hover {
+.handlePrev-btn:hover, .handleNext-btn:hover {
     background-color: var(--btn-color);
     color: var(--light);
 }

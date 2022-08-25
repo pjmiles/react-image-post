@@ -7,9 +7,9 @@ import { baseURL } from "../api/axios";
 
 const DisplayImage = ({ images, setImages, err, setErr }) => {
   const [pages, setPage] = useState(1);
-  const [totalImages, setTotalImages] = useState(0)
+  const [totalImages, setTotalImages] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [imageMsg, setImageMsg] = useState("");
+  // const [imageMsg, setImageMsg] = useState("");
 
   useEffect(() => {
     const showImage = async () => {
@@ -17,10 +17,10 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
         const { data } = await axios.get(`${baseURL}?&offset=${pages}`);
         console.log(data);
         setImages(data.results);
-        setTotalImages(data.totalImages)
-        if (!data.next) {
-          setImageMsg("End of the page");
-        }
+        setTotalImages(data.totalImages);
+        // if (!data.next) {
+        //   setImageMsg("End of the page");
+        // }
         setIsLoaded(true);
       } catch {
         setErr("Error showing images");
@@ -34,7 +34,15 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
     if (pages === totalImages) {
       return;
     } else {
-      setPage((pages) => pages + 1); //to add more pictures
+      setPage((page) => page + 1); //to add more pictures
+    }
+  };
+
+  const handlePrevious = () => {
+    if (pages === 1) {
+      return;
+    } else {
+      setPage((page) => page - 1); // to go back to previous page
     }
   };
 
@@ -56,9 +64,11 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
               <div className="error-display">{err}</div>
             </div>
           ) : (
-            <div className="image-message-container">
-              <div className="image-message">{imageMsg}</div>
-            </div>
+            // <div className="image-message-container">
+            //   <div className="image-message">{imageMsg}</div>
+            // </div>
+            ""
+
           )}
           <div className="image-container">
             {isLoaded ? (
@@ -81,8 +91,11 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
           </div>
         </div>
         <div className="loadmore">
+          <button onClick={handlePrevious} className="handlePrev-btn">
+            Prev
+          </button>
           <button onClick={handleNext} className="handleNext-btn">
-            handleNext
+            Next
           </button>
         </div>
       </div>
