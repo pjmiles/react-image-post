@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://picture-searches.herokuapp.com/api/pictures"
+export const baseURL = "https://picture-searches.herokuapp.com/api/pictures/"
 
 const axiosInstance = axios.create({
   baseURL: baseURL
@@ -8,6 +8,7 @@ const axiosInstance = axios.create({
 
 export default axiosInstance
 
+// APIs
 // M   https://file-6556.herokuapp.com/
 // for uploads
 // /uploads

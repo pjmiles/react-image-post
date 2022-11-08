@@ -2,21 +2,25 @@ import axiosInstance from "../api/axios";
 import { useState, useEffect } from "react";
 import "./DisplayImage.css";
 import Loading from "../loading/Loding";
+import axios from "axios";
+import { baseURL } from "../api/axios";
 
 const DisplayImage = ({ images, setImages, err, setErr }) => {
-  const [perPage, setPerPage] = useState(1);
+  const [pages, setPage] = useState(1);
+  const [totalImages, setTotalImages] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [imageMsg, setImageMsg] = useState("");
+  // const [imageMsg, setImageMsg] = useState("");
 
   useEffect(() => {
     const showImage = async () => {
       try {
-        const { data } = await axiosInstance.get(`?&offset=${perPage}`);
+        const { data } = await axios.get(`${baseURL}?&offset=${pages}`);
         console.log(data);
         setImages(data.results);
-        if (!data.next) {
-          setImageMsg("No more paginated images");
-        }
+        setTotalImages(data.totalImages);
+        // if (!data.next) {
+        //   setImageMsg("End of the page");
+        // }
         setIsLoaded(true);
       } catch {
         setErr("Error showing images");
@@ -24,10 +28,22 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
       }
     };
     showImage();
-  }, [setImages, perPage, setErr, setIsLoaded]);
+  }, [setImages, pages, setErr, setIsLoaded]);
 
-  const loadMore = () => {
-    setPerPage((page) => page + 5); //to add 5 pictures more
+  const handleNext = () => {
+    if (pages === totalImages) {
+      return;
+    } else {
+      setPage((page) => page + 1); //to add more pictures
+    }
+  };
+
+  const handlePrevious = () => {
+    if (pages === 1) {
+      return;
+    } else {
+      setPage((page) => page - 1); // to go back to previous page
+    }
   };
 
   const handleDelete = async (id) => {
@@ -48,9 +64,11 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
               <div className="error-display">{err}</div>
             </div>
           ) : (
-            <div className="image-message-container">
-              <div className="image-message">{imageMsg}</div>
-            </div>
+            // <div className="image-message-container">
+            //   <div className="image-message">{imageMsg}</div>
+            // </div>
+            ""
+
           )}
           <div className="image-container">
             {isLoaded ? (
@@ -73,7 +91,12 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
           </div>
         </div>
         <div className="loadmore">
-          <button onClick={loadMore}>Loadmore</button>
+          <button onClick={handlePrevious} className="handlePrev-btn">
+            Prev
+          </button>
+          <button onClick={handleNext} className="handleNext-btn">
+            Next
+          </button>
         </div>
       </div>
     </>
