@@ -6,32 +6,31 @@ import axios from "axios";
 import { baseURL } from "../api/axios";
 
 const DisplayImage = ({ images, setImages, err, setErr }) => {
-  const [pages, setPage] = useState(1);
-  const [totalImages, setTotalImages] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalImages, setTotalImages] = useState(5);
+  const [isLoaded, setIsLoaded] = useState(true);
   // const [imageMsg, setImageMsg] = useState("");
 
   useEffect(() => {
     const showImage = async () => {
       try {
-        const { data } = await axios.get(`${baseURL}?&offset=${pages}`);
+        const { data } = await axios.get(`${baseURL}?&offset=${page}`);
         console.log(data);
         setImages(data.results);
         setTotalImages(data.totalImages);
-        // if (!data.next) {
-        //   setImageMsg("End of the page");
-        // }
-        setIsLoaded(true);
+        setTimeout(() => {
+          setIsLoaded(false);
+        }, 3000);
       } catch {
-        setErr("Error showing images");
-        setIsLoaded(true);
+        setErr("Error showing images please try again!");
+        setIsLoaded(false);
       }
     };
     showImage();
-  }, [setImages, pages, setErr, setIsLoaded]);
+  }, [setImages, page, setErr, setIsLoaded]);
 
   const handleNext = () => {
-    if (pages === totalImages) {
+    if (page === totalImages) {
       return;
     } else {
       setPage((page) => page + 1); //to add more pictures
@@ -39,17 +38,17 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
   };
 
   const handlePrevious = () => {
-    if (pages === 1) {
+    if (page === page - 1) {
       return;
     } else {
       setPage((page) => page - 1); // to go back to previous page
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async ({ id }) => {
     try {
-      const result = await axiosInstance.delete(`${id}`);
-      console.log(result);
+      await axiosInstance.delete(id);
+      setImages(images.filter((pic) => pic.id !== id));
     } catch (error) {
       console.log(error);
     }
@@ -68,17 +67,16 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
             //   <div className="image-message">{imageMsg}</div>
             // </div>
             ""
-
           )}
           <div className="image-container">
-            {isLoaded ? (
+            {!isLoaded ? (
               images.map((image) => {
                 return (
                   <div className="image-control" key={image.id}>
                     <img src={image.image} alt={image.name} className="image" />
                     <p className="image-title">{image.title}</p>
                     <div className="delete-section">
-                      <button className="delete" onClick={() => handleDelete()}>
+                      <button className="delete" onClick={handleDelete}>
                         delete
                       </button>
                     </div>
@@ -94,6 +92,7 @@ const DisplayImage = ({ images, setImages, err, setErr }) => {
           <button onClick={handlePrevious} className="handlePrev-btn">
             Prev
           </button>
+          <span>{page}</span>
           <button onClick={handleNext} className="handleNext-btn">
             Next
           </button>
